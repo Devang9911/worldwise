@@ -1,0 +1,76 @@
+{
+  "cities": [
+    {
+      "id": "7300",
+      "cityName": "Berlin",
+      "countryName": "Germany",
+      "emoji": "🏳️‍⚧️",
+      "date": "2026-01-20T11:57:45.866Z",
+      "notes": "",
+      "position": {
+        "lat": "52.49582183577283",
+        "lng": "13.381347656250002"
+      }
+    },
+    {
+      "id": "6ea2",
+      "cityName": "Paris",
+      "countryName": "France",
+      "emoji": "🏳️‍⚧️",
+      "date": "2025-12-28T11:57:59.000Z",
+      "notes": "",
+      "position": {
+        "lat": "48.835058671406735",
+        "lng": "2.3291015625000004"
+      }
+    },
+    {
+      "id": "3da7",
+      "cityName": "Singapore",
+      "countryName": "Singapore",
+      "emoji": "🏳️‍⚧️",
+      "date": "2026-01-01T11:59:34.000Z",
+      "notes": "",
+      "position": {
+        "lat": "1.2851686244577012",
+        "lng": "103.85375976562501"
+      }
+    },
+    {
+      "id": "7a7e",
+      "cityName": "Beijing",
+      "countryName": "China",
+      "emoji": "🏳️‍⚧️",
+      "date": "2026-01-20T12:00:36.728Z",
+      "notes": "",
+      "position": {
+        "lat": "39.91181181267688",
+        "lng": "116.27929687500001"
+      }
+    },
+    {
+      "id": "4e3e",
+      "cityName": "Delhi",
+      "countryName": "India",
+      "emoji": "🏳️‍⚧️",
+      "date": "2026-01-20T12:00:44.881Z",
+      "notes": "",
+      "position": {
+        "lat": "28.610343009693906",
+        "lng": "77.16796875000001"
+      }
+    },
+    {
+      "id": "170a",
+      "cityName": "Surat",
+      "countryName": "India",
+      "emoji": "🏳️‍⚧️",
+      "date": "2025-11-03T12:01:09.000Z",
+      "notes": "",
+      "position": {
+        "lat": "21.227693523611045",
+        "lng": "72.82836914062501"
+      }
+    }
+  ]
+}
