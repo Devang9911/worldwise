@@ -1,8 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 function Navbar() {
   const [open, setOpen] = useState(false);
+  const { isAuthenticated, logout } = useAuth();
+  const navigate = useNavigate();
+
   const menuRef = useRef(null);
   const buttonRef = useRef(null);
 
@@ -24,6 +28,12 @@ function Navbar() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [open]);
 
+  function handleLogout() {
+    logout();
+    setOpen(false);
+    navigate("/");
+  }
+
   const linkClasses = ({ isActive }) =>
     `relative text-xl uppercase tracking-widest transition-colors
      ${
@@ -42,11 +52,6 @@ function Navbar() {
 
           {/* Desktop Menu */}
           <ul className="hidden md:flex items-center gap-14">
-            {/* <li>
-              <NavLink to="/" className={linkClasses}>
-                Home
-              </NavLink>
-            </li> */}
             <li>
               <NavLink to="/product" className={linkClasses}>
                 Product
@@ -57,11 +62,23 @@ function Navbar() {
                 Pricing
               </NavLink>
             </li>
-            <li>
-              <NavLink to="/login" className={linkClasses}>
-                Login
-              </NavLink>
-            </li>
+
+            {!isAuthenticated ? (
+              <li>
+                <NavLink to="/login" className={linkClasses}>
+                  Login
+                </NavLink>
+              </li>
+            ) : (
+              <li>
+                <button
+                  onClick={handleLogout}
+                  className="text-xl uppercase tracking-widest text-red-400 hover:text-red-300 transition"
+                >
+                  Logout
+                </button>
+              </li>
+            )}
           </ul>
 
           {/* Hamburger */}
@@ -91,18 +108,13 @@ function Navbar() {
         {/* Mobile Menu */}
         <div
           ref={menuRef}
-          className={`md:hidden fixed inset-x-4 top-20 rounded-3xl bg-black/80 text-white    backdrop-blur-xl border border-white/10 shadow-2xl transition-all duration-300 ${
+          className={`md:hidden fixed inset-x-4 top-20 rounded-3xl bg-black/80 text-white backdrop-blur-xl border border-white/10 shadow-2xl transition-all duration-300 ${
             open
               ? "opacity-100 translate-y-0"
               : "opacity-0 pointer-events-none -translate-y-4"
           }`}
         >
           <ul className="flex flex-col items-center gap-8 py-10 text-lg uppercase tracking-wider">
-            {/* <li>
-              <NavLink onClick={() => setOpen(false)} to="/" className={linkClasses}>
-                Home
-              </NavLink>
-            </li> */}
             <li>
               <NavLink
                 onClick={() => setOpen(false)}
@@ -121,15 +133,27 @@ function Navbar() {
                 Pricing
               </NavLink>
             </li>
-            <li>
-              <NavLink
-                onClick={() => setOpen(false)}
-                to="/login"
-                className={linkClasses}
-              >
-                Login
-              </NavLink>
-            </li>
+
+            {!isAuthenticated ? (
+              <li>
+                <NavLink
+                  onClick={() => setOpen(false)}
+                  to="/login"
+                  className={linkClasses}
+                >
+                  Login
+                </NavLink>
+              </li>
+            ) : (
+              <li>
+                <button
+                  onClick={handleLogout}
+                  className="uppercase tracking-widest text-red-400 hover:text-red-300 transition"
+                >
+                  Logout
+                </button>
+              </li>
+            )}
           </ul>
         </div>
       </nav>

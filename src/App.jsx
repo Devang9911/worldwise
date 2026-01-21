@@ -14,6 +14,7 @@ import City from "./pages/City";
 import Countries from "./pages/Countries";
 import CityList from "./components/CityList";
 import Form from "./components/Form";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   return (
@@ -26,12 +27,14 @@ function App() {
           <Route path="/pricing" element={<Pricing />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
-          <Route path="app" element={<AppLayout />}>
-            <Route index element={<Navigate replace to="city" />} />
-            <Route path="city" element={<CityList />} />
-            <Route path="city/:id" element={<City />} />
-            <Route path="countries" element={<Countries />} />
-            <Route path="form" element={<Form />} />
+          <Route element={<ProtectedRoute />}>
+            <Route path="app" element={<AppLayout />}>
+              <Route index element={<Navigate replace to="city" />} />
+              <Route path="city" element={<CityList />} />
+              <Route path="city/:id" element={<City />} />
+              <Route path="countries" element={<Countries />} />
+              <Route path="form" element={<Form />} />
+            </Route>
           </Route>
           <Route path="*" element={<PageNotFound />} /> // when no routes match
           to path then display "page not found"
