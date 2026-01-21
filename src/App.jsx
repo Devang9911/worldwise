@@ -1,6 +1,6 @@
 import "./App.css";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import { useState , useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import Home from "./pages/Home";
 import Product from "./pages/Product";
@@ -16,9 +16,6 @@ import CityList from "./components/CityList";
 import Form from "./components/Form";
 
 function App() {
-  
-
-  
   return (
     <>
       <BrowserRouter>
@@ -30,11 +27,11 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="app" element={<AppLayout />}>
-            <Route index element={<Navigate replace to="city"/>} />
+            <Route index element={<Navigate replace to="city" />} />
             <Route path="city" element={<CityList />} />
-            <Route path="city/:id" element={<City/>}/>
-            <Route path="countries" element={<Countries/>} />
-            <Route path="form" element={<Form/>} />
+            <Route path="city/:id" element={<City />} />
+            <Route path="countries" element={<Countries />} />
+            <Route path="form" element={<Form />} />
           </Route>
           <Route path="*" element={<PageNotFound />} /> // when no routes match
           to path then display "page not found"
