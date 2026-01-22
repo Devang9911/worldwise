@@ -1,6 +1,7 @@
 import { useParams, useNavigate } from "react-router-dom";
-import { useCity } from "../context/CityContext";
 import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {fetchCurrentCity} from "../features/city/cityThunks"
 
 const formatDate = (date) =>
   new Intl.DateTimeFormat("en", {
@@ -11,13 +12,15 @@ const formatDate = (date) =>
   }).format(new Date(date));
 
 function City() {
-  const { isLoading, getCity, currentCity } = useCity();
+  const dispatch = useDispatch()
   const navigate = useNavigate();
   const { id } = useParams();
 
+  const { isLoading , currentCity , error } = useSelector((state) => state.city)
+
   useEffect(() => {
-    getCity(id);
-  }, [id]);
+    dispatch(fetchCurrentCity(id));
+  }, [dispatch , id]);
 
   const { cityName, date } = currentCity;
 

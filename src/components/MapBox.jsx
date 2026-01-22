@@ -8,12 +8,12 @@ import {
   useMap,
   useMapEvent,
 } from "react-leaflet";
-import { useCity } from "../context/CityContext";
 import { useGeolocation } from "../hooks/useGeolocation";
 import { useUrlPosition } from "../hooks/useUrlPosition";
+import { useSelector } from "react-redux";
 
 function MapBox() {
-  const { city } = useCity();
+  const {city} = useSelector((state)=>state.city)
   const [mapPosition, setMapPosition] = useState([
     52.53586782505711, 13.376933665713324,
   ]);

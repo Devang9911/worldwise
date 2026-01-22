@@ -1,10 +1,11 @@
-import React, { useEffect, useReducer, useState } from "react";
+import React, { useEffect, useReducer } from "react";
 import { useNavigate } from "react-router-dom";
 import { useUrlPosition } from "../hooks/useUrlPosition";
 import axios from "axios";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { useCity } from "../context/CityContext";
+import { createCity } from "../features/city/cityThunks";
+import { useDispatch } from "react-redux";
 
 // https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=0&longitude=0
 
@@ -43,16 +44,18 @@ function reducer(state, action) {
 
 function Form() {
   const navigate = useNavigate();
-  const { createCity } = useCity();
+  const reduxDispatch = useDispatch();
   const [lat, lng] = useUrlPosition();
 
-  const [{ isLoading, error, cityName, countryName, date, notes }, dispatch] =
-    useReducer(reducer, initialState);
+  const [
+    { isLoading, error, cityName, countryName, date, notes },
+    localDispatch,
+  ] = useReducer(reducer, initialState);
 
   useEffect(() => {
     async function fetchCityData() {
       try {
-        dispatch({ type: "LOADING" });
+        localDispatch({ type: "LOADING" });
         const response = await axios.get(
           `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lng}`,
         );
@@ -60,7 +63,7 @@ function Form() {
           throw new Error(
             "That doesnt seem to be a city, Click somewhere else 😍",
           );
-        dispatch({
+        localDispatch({
           type: "LOAD_CITY_DATA",
           payload: {
             city: response.data.city,
@@ -68,7 +71,7 @@ function Form() {
           },
         });
       } catch (error) {
-        dispatch({ type: "REJECTED", payload: error.message });
+        localDispatch({ type: "REJECTED", payload: error.message });
       }
     }
     fetchCityData();
@@ -87,8 +90,8 @@ function Form() {
       position: { lat, lng },
     };
 
-    createCity(newCity);
-    dispatch({ type: "RESET_FORM" });
+    reduxDispatch(createCity(newCity));
+    localDispatch({ type: "RESET_FORM" });
     navigate("/app");
   };
 
@@ -122,7 +125,9 @@ function Form() {
             </label>
             <DatePicker
               className="w-full bg-white rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
-              onChange={(date) => dispatch({ type: "SET_DATE", payload: date })}
+              onChange={(date) =>
+                localDispatch({ type: "SET_DATE", payload: date })
+              }
               selected={date}
               dateFormat={"dd/MM/yyyy"}
             />
@@ -139,7 +144,7 @@ function Form() {
               className="w-full bg-white rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
               value={notes}
               onChange={(e) =>
-                dispatch({ type: "SET_NOTES", payload: e.target.value })
+                localDispatch({ type: "SET_NOTES", payload: e.target.value })
               }
             />
           </div>

@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useCity } from "../context/CityContext";
+import { useDispatch, useSelector } from "react-redux";
+import { deleteCity } from "../features/city/cityThunks";
 
 const formatDate = (date) =>
   new Intl.DateTimeFormat("en", {
@@ -10,15 +11,15 @@ const formatDate = (date) =>
   }).format(new Date(date));
 
 function CityItem({ city }) {
-  const { currentCity, deleteCity } = useCity();
+  const dispatch = useDispatch();
+  const currentCity = useSelector((state) => state.city.currentCity);
   const { id, emoji, cityName, date, position } = city;
 
   function handleDelete(e) {
     e.preventDefault();
     // console.log("param id:", id);
     // console.log("city id:", city.id);
-
-    deleteCity(id);
+    dispatch(deleteCity(id));
   }
   return (
     <li className="list-none">

@@ -1,9 +1,11 @@
 import React from "react";
 import CityItem from "./CityItem";
-import { useCity } from "../context/CityContext";
+import { useDispatch, useSelector } from "react-redux";
 
 function CityList() {
-  const { city , isLoading } = useCity();
+  const dispatch = useDispatch()
+  const {city , isLoading} = useSelector((state)=>state.city)
+
   if (isLoading)
     return <p className="text-xl text-gray-400 text-center">Loading...</p>;
 
